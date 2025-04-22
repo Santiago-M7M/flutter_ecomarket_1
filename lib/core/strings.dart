@@ -30,4 +30,7 @@ class Appstrings {
   static const String confirmPassword = 'Confirmar contraseña';
   static const String login = 'Iniciar sesión';
   static const String loginRegister = 'Registrarse';
+  static const String registerSucceful =
+      'Registrado correctamente con Firebase 🎉';
+  static const String fail = 'Error';
 }

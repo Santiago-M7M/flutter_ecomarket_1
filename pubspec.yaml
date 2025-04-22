@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   firebase_core: ^2.27.0  # o la última
   firebase_auth: ^4.17.4  # usa la versión más reciente  # Para autenticación de Firebase
+  cloud_firestore: ^4.13.0 #
+  google_sign_in: ^6.1.4 # Para iniciar sesión con Google
 
 dev_dependencies:
   flutter_test:

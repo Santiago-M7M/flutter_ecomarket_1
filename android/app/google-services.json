@@ -12,7 +12,20 @@
           "package_name": "com.example.flutter_ecomarket_1"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "447835740010-7jgk4dgdkiioico8o2ak3p3foppid56l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_ecomarket_1",
+            "certificate_hash": "fe00e89a831d0ca083016e2b67b093eb8a65782a"
+          }
+        },
+        {
+          "client_id": "447835740010-omu9ee17r8j5c0sfl6c7po8tqif06lpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAdXQFuZ7dcdYyyjeufc-DLe29u_W1OlsY"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447835740010-omu9ee17r8j5c0sfl6c7po8tqif06lpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "447835740010-16neh2uekibbintie5hsmj7us7utklrc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterEcomarket1"
+              }
+            }
+          ]
         }
       }
     }

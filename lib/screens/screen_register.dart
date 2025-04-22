@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:flutter_ecomarket_1/auth/google_sign.dart'; // importa tu clase
 import 'package:flutter_ecomarket_1/core/color.dart';
 import 'package:flutter_ecomarket_1/core/strings.dart';
+import '../core/routes.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -170,35 +172,37 @@ class _RegisterScreenState extends State<RegisterScreen>
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          debugPrint("Nombre: ${_nameController.text}");
-                          debugPrint("Email: ${_emailController.text}");
-                          debugPrint(
-                            "Método de pago: ${_paymentController.text}",
-                          );
-                          debugPrint("Contraseña: ${_passwordController.text}");
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Registrado correctamente 🎉'),
-                            ),
-                          );
-
-                          //
-                          // fire basse registro
-
                           try {
-                            await FirebaseAuth.instance
+                            // Registro en Firebase Auth
+                            UserCredential userCredential = await FirebaseAuth
+                                .instance
                                 .createUserWithEmailAndPassword(
                                   email: _emailController.text.trim(),
                                   password: _passwordController.text.trim(),
                                 );
 
+                            // Guardar datos en Firestore
+                            await FirebaseFirestore.instance
+                                .collection('usuarios')
+                                .doc(userCredential.user!.uid)
+                                .set({
+                                  'nombre': _nameController.text.trim(),
+                                  'correo': _emailController.text.trim(),
+                                  'metodo_pago': _paymentController.text.trim(),
+                                  'fehca_registro': Timestamp.now(),
+                                });
+
+                            // Mostrar mensaje de éxito
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text(
-                                  'Registrado correctamente con Firebase 🎉',
-                                ),
+                                content: Text('Registro exitoso 🎉'),
                               ),
+                            );
+
+                            // Redirigir al homepage
+                            Navigator.pushReplacementNamed(
+                              context,
+                              Routes.homePage,
                             );
                           } on FirebaseAuthException catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -206,7 +210,8 @@ class _RegisterScreenState extends State<RegisterScreen>
                             );
                           }
                         }
-                      },
+                      }, // Fin
+
                       child: const Text("Registrarse"),
                     ),
                   ),
@@ -216,8 +221,33 @@ class _RegisterScreenState extends State<RegisterScreen>
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton.icon(
-                      onPressed: () {
-                        debugPrint('Iniciar sesión con Google');
+                      onPressed: () async {
+                        final userCredential =
+                            await GoogleSignInProvider.signInWithGoogle();
+
+                        if (userCredential != null) {
+                          // ¡Inicio de sesión exitoso!
+                          debugPrint(
+                            "Usuario: ${userCredential.user!.displayName}",
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Inicio de sesión con Google exitoso 🎉',
+                              ),
+                            ),
+                          );
+                          Navigator.pushReplacementNamed(
+                            context,
+                            Routes.homePage,
+                          ); // o tu ruta home
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Inicio de sesión cancelado'),
+                            ),
+                          );
+                        }
                       },
                       icon: Image.asset(
                         'assets/icons/google-logo.png',
@@ -239,11 +269,12 @@ class _RegisterScreenState extends State<RegisterScreen>
                     ),
                   ),
 
+                  //Boton de login
                   const SizedBox(height: 10),
                   Center(
                     child: TextButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.popAndPushNamed(context, '/login');
                       },
                       child: const Text.rich(
                         TextSpan(

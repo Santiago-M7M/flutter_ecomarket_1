@@ -5,6 +5,8 @@ import 'package:flutter_ecomarket_1/core/routes.dart';
 import 'package:flutter_ecomarket_1/screens/screen_splash.dart';
 import 'package:flutter_ecomarket_1/screens/screen_home.dart';
 import 'package:flutter_ecomarket_1/screens/screen_register.dart';
+import 'package:flutter_ecomarket_1/screens/screen_hompage.dart';
+import 'package:flutter_ecomarket_1/screens/screen_login.dart';
 import 'core/strings.dart';
 
 void main() async {
@@ -26,6 +28,8 @@ class MainApp extends StatelessWidget {
         Routes.splash: (context) => const Splashscreen(),
         Routes.home: (context) => const HomeScreen(),
         Routes.register: (context) => const RegisterScreen(),
+        Routes.login: (context) => const ScreenLogin(),
+        Routes.homePage: (context) => ScreenHompage(),
       },
     );
   }
